@@ -1,5 +1,5 @@
 # Sorting by Reversals for Reversal Distance Problem on Bioinformatics
-Implement the algorithms SimpleReversalSort, BreakpointReversalSort and ImprovedBreakpointReversalSort .
+Implement the algorithms SimpleReversalSort and ImprovedBreakpointReversalSort .
 
 ## Data
 /k-input.data
@@ -8,7 +8,6 @@ Implement the algorithms SimpleReversalSort, BreakpointReversalSort and Improved
 <pre>
 	/srs.cpp - SimpleReversalSort
 	/srs-benchmark.cpp - SimpleReversalSort Benchmark
-	/brs.cpp - BreakpointReversalSort
 	/ibrs.cpp - ImprovedBreakpointReversalSort
 </pre>
 
@@ -18,8 +17,12 @@ g++ srs.cpp -O3 -o srs
 
 ## Execution
 srs.exe < input.data <br/>
-srs-benchmark.exe 100000
+srs-benchmark.exe 100000 <br/>
+ibrs.exe < ibrs-clase.data
 
+## Results
+Improved Breakpoint ReversalSort<br/>
+![](img/ibrs.png)<br/>
 ![](img/srs.png)<br/>
 ![](img/srs-benchmark.png)
 

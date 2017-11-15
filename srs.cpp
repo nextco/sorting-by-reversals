@@ -23,7 +23,7 @@ void leer_permutacion(int *&array, int& n){
 
 	cout << "Ingresa n: "; cin >> n;
     
-    cout << "Permutacion? p.e. : 1, 2, 3, ..., n" << endl;
+    cout << "Permutacion? i.e : 5, 1, 2, 3, 4, ..." << endl;
     array = new int[n](); // Inicializar todos a zero	
 	for (int i = 0; i != n; i++){
 		cin >> array[i];

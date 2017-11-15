@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Creditos: https://www.cs.helsinki.fi/u/tpkarkka/opetus/14s/AfB/exercise2_problem3.py
 # Improved breakpoint reversal sort
 # Example:  ./prob3.py 8 2 7 6 5 1 4 3
 import sys
@@ -40,6 +41,7 @@ def has_decreasing(u):
         # Element i belongs to a decreasing strip 
         # if the element does not belong to an increasing strip.
         if u[i-1] + 1 != u[i] and u[i] + 1 != u[i+1]:
+            # print "posible strip decreciente en: ", u[i-1], " ", u[i], " ", u[i + 1]
             return True # u[i] is in decreasing stip
     return False
 

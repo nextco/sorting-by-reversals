@@ -48,20 +48,20 @@ void leer_permutacion(int *&array, int& n){
 }
 /*
  Devuelve el numero de breakpoins b(pi)
- i.e para n = 7 
- 1 3 5 4 7 2 6 -> 0 1 3 5 4 7 2 6 8
- 	bp: 1 3
- 	bp: 3 5
- 	bp: 4 7
-	bp: 7 2
-	bp: 2 6
-	bp: 6 8	
-    -> # bp = 6
+ i.e para n = 8
+	0 2 1 3 4 5 8 7 6 9
+
+	bp: 0 2
+	bp: 1 3
+	bp: 5 8
+	bp: 6 9
+    -> # bp = 4
+	Debug: ibrs.exe < sd.data
 */
 int numero_de_breakpoints(int *&array, int n){
 	int bp = 0;
 	// No comparar el último valor
-	for (int i = 1; i != (n - 1) ; i++){
+	for (int i = 0; i != (n - 1) ; i++){
 		if(array[i] != (array[i + 1] + 1) && array[i] != (array[i + 1] - 1) ){
 			cout << "bp: " << array[i] << " " << array[i + 1] << endl;
 			bp++;
@@ -75,6 +75,7 @@ Retorna verdadero si la permutación tiene un strip decreciente
 los strips de longitud uno son decrecientes por definicion
 
 Debug: ibrs.exe < sd.data
+
 */
 bool tiene_un_strip_decreciente(int *&array, int n){
 	// El primer valor y el ultimo valor la permutación son crecientes por definicion	

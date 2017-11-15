@@ -15,7 +15,7 @@ def b(u):
     sum = 0
     for i in range(len(u) - 1):
         if u[i] != u[i+1] + 1 and u[i] != u[i+1] - 1:
-            #print "Breakpoint:", u[i], u[i+1] 
+            print "Breakpoint:", u[i], u[i+1] 
             sum += 1
     return sum
 

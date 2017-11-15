@@ -82,7 +82,7 @@ bool tiene_un_strip_decreciente(int *&array, int n){
 	for (int i = 1; i != (n - 1) ; i++){
 		// Algoritmo: el elemento i pertenece a un strip decreciente,
 		// Si el elemento no pertece a un strip creciente
-		if( (array[i - 1] + 1) != array[i] && array[i] + 1 != array[i + 1] ){
+		if( (array[i - 1] + 1) != array[i] && (array[i] + 1) != array[i + 1] ){
 			cout << "posible strip decreciente en: " << array[ i - 1 ] << " " <<  array[i] << " " << array[i + 1] << endl;
 			return true;			
 		}

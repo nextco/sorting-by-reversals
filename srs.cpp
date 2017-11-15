@@ -53,10 +53,12 @@ bool es_permutacion_identidad(int *&array, int n){
 }
 
 /*
-	Input: [1,2,3,4,5]
+ 	Equivale a 
+ 		pi = pi * p (en el algoritmo del libro) 
+ 		Referencia: Linea 4 de la pag. 130
+ 	Input: [1,2,3,4,5]
 	Izquierda: 0, Derecha: 4
-	Output: [5,4,3,2,1]
-	Estado: Se que va servir para el improved, en este no se usa
+	Output: [5,4,3,2,1]	
 */	
 void revertir_sub_array(int *& array, int izquierda, int derecha){
 	// cout <<"revertir_sub_array(" << izquierda << ", " << derecha << ")" << endl;
@@ -92,19 +94,6 @@ int buscar_elemento_en_array_desde_la_izquierda(int *& array, int n, int target,
 
 /*
 Algoritmo:
-Examine each position i of the permutation from left to right
-I At each position, if pi != i , do a reversal such that pi(sub-i) = i
-
-Teoría
-i.e Para la permutación identidad (4 genes secuenciales)
-pi(sub-1)  = 1 (Comienza en 1)
-pi(sub-2)  = 2
-pi(sub-3)  = 3
-pi(sub-4)  = 4
-
-Reversal o Inversiones
-Problema de la distancia de reversión d(sub-pi);
-Encontrar la más pequeña serie de reversiones para una permutación
 
 Ref. 
 // Neil C. Jones, Pavel A. Pevzner-An Introduction to Bioinformatics Algorithms 2004.pdf

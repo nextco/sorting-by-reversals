@@ -21,7 +21,7 @@ srs-benchmark.exe 100000 <br/>
 ibrs.exe < ibrs-clase.data
 
 ## Results
-Improved Breakpoint ReversalSort<br/>
+Improved Breakpoint Reversal Sort<br/>
 ![](img/ibrs.png)<br/>
 ![](img/srs.png)<br/>
 ![](img/srs-benchmark.png)

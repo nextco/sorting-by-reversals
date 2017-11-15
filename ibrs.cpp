@@ -82,7 +82,7 @@ bool tiene_un_strip_decreciente(int *&array, int n){
 		// Algoritmo: el elemento i pertenece a un strip decreciente,
 		// Si el elemento no pertece a un strip creciente
 		if( (array[i - 1] + 1) != array[i] && array[i] + 1 != array[i + 1] ){
-			cout << "posible stip decreciente en: " << array[ i - 1 ] << " " <<  array[i] << " " << array[i + 1] << endl;
+			cout << "posible strip decreciente en: " << array[ i - 1 ] << " " <<  array[i] << " " << array[i + 1] << endl;
 			return true;			
 		}
 	}
@@ -143,9 +143,9 @@ Ref.
 // Neil C. Jones, Pavel A. Pevzner-An Introduction to Bioinformatics Algorithms 2004.pdf
 // Pag 134
 */
-void breakpoint_reversal_sort(int *&array, int n, int& d_pi){
+void improved_breakpoint_reversal_sort(int *&array, int n, int& d_pi){
 	d_pi = 0; // Init 
-	cout << "breakpoint_reversal_sort: " << endl;
+	cout << "improved_breakpoint_reversal_sort: " << endl;
 
 	tiene_un_strip_decreciente(array,n);
 	/*	 
@@ -199,7 +199,7 @@ int main(int argc, const char* argv[]) {
 	
 	// Calcular tiempo transcurrido.
   	auto t1 = chrono::high_resolution_clock::now();
-  		breakpoint_reversal_sort(array, n, d_pi);		
+  		improved_breakpoint_reversal_sort(array, n, d_pi);		
   	auto t2 = chrono::high_resolution_clock::now();
 
 	cout << endl << "d_pi = " <<  d_pi << endl; 

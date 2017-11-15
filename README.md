@@ -1,5 +1,5 @@
 # Sorting by Reversals for Reversal Distance Problem on Bioinformatics
-Implement the algorithms K-Means & UPGMA, for educational use.
+Implement the algorithms SimpleReversalSort, BreakpointReversalSort and ImprovedBreakpointReversalSort .
 
 ## Data
 /k-input.data

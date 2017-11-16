@@ -202,14 +202,15 @@ void improved_breakpoint_reversal_sort(int *&array, int n, int& d_pi){
 		if( tiene_un_strip_decreciente(array, n) ){
 			elegir_segmento_reversion(array, n, mejor_rango_izquierda, mejor_rango_derecha );
 			
-			cout << endl << "(mri = " << mejor_rango_izquierda << ", mrd = " << mejor_rango_derecha;
+			// Mostrar rango(valor entre elementos) para hacer la reversion
+			cout << endl << "(mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha];
 			revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
 
 		}else{
 			// Solo quedan strips crecientes
 			elegir_segmento_creciente(array, n, mejor_rango_izquierda, mejor_rango_derecha);
 
-			cout << endl <<  "(mri = " << mejor_rango_izquierda << ", mrd = " << mejor_rango_derecha;
+			cout << endl << "(mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha];
 			revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
         }
         d_pi++;

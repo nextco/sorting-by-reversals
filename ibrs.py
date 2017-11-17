@@ -38,10 +38,18 @@ def pickReversal(seq, strips):
     """ test each decreasing interval to see if it leads to a reversal that
     removes two breakpoints, otherwise, return a reversal that removes only one """
     reversal = (-1, None)
-    left = [i for i, j in strips]
+
+    left = [i for i, j in strips]    
     right = [j for i, j in strips]
+    
+    print "strips -> ", strips
+    print "left -> ", left
+    print "right -> ", right
+
+
     for i in left:
         for j in right:
+            print "(i, j) = ", i , " ",  j
             if (i >= j-1):
                 # skip invalid intervals and
                 # those with only one element
@@ -64,11 +72,12 @@ def doReversal(seq,(i,j)):
 def improvedBreakpointReversalSort(seq):
     while hasBreakpoints(seq):
         increasing, decreasing = getStrips(seq)
+
         # print "increasing ", increasing
         # print "decreasing ", decreasing
 
         if len(decreasing) > 0:
-            reversal = pickReversal(seq, increasing+decreasing)
+            reversal = pickReversal(seq, increasing + decreasing)
         else:
             print "0:",
             reversal = increasing[0]

@@ -74,9 +74,9 @@ int numero_de_breakpoints(int *&array, int n){
 /*
 Retorna verdadero si la permutación tiene un strip decreciente
 */
-bool tiene_un_strip_decreciente_fixed(int *&array, int n){
+bool tiene_al_menos_un_strip_decreciente(int *&array, int n){
 	
-	// cout <<"tiene_un_strip_decreciente_fixed -> " << endl;
+	// cout <<"tiene_al_menos_un_strip_decreciente -> " << endl;
 
 	// El primer valor y el ultimo valor la permutación son crecientes por definicion
 	for (int i = 1; i != (n - 1) ; i++){
@@ -188,7 +188,7 @@ void revertir_strip_creciente(int * array, int n, int& mejor_rango_izquierda, in
 
 	mejor_rango_izquierda = 1;
 	// Hasta encontrar una secuencia de un strip creciente
-	// [1 - 2] -> Ok, comienza en dos
+	// [1 2 3 4 6 7 5] -> Ok, comienza en uno y termina en 4
 	for (int i = 1; i != n-1; i++){
 		if( array[i + 1] - array[i] == 1 ){
 			// 1 2 3 4 .. n
@@ -250,7 +250,7 @@ void improved_breakpoint_reversal_sort(int *&array, int n, int& d_pi){
 	// cout << "improved_breakpoint_reversal_sort: " << endl;
 
 	cout << "bp_originales = " << numero_de_breakpoints(array, n) << endl << endl;
-	// tiene_un_strip_decreciente_fixed(array, n);
+	// tiene_al_menos_un_strip_decreciente(array, n);
 	
 	while( numero_de_breakpoints(array, n) > 0){
 
@@ -258,10 +258,10 @@ void improved_breakpoint_reversal_sort(int *&array, int n, int& d_pi){
 		int mejor_rango_derecha = 0;
 
 		// Tiene un strip decreciente?
-		// cout << "Strip decreciente (-): (0=false, 1=true) " << tiene_un_strip_decreciente_fixed(array, n) << endl;
+		// cout << "Strip decreciente (-): (0=false, 1=true) " << tiene_al_menos_un_strip_decreciente(array, n) << endl;
 				
 		// if π has a decreasing strip (Linea 2)
-		if( tiene_un_strip_decreciente_fixed(array, n) ){
+		if( tiene_al_menos_un_strip_decreciente(array, n) ){
 			// Among all reversals, choose reversal ρ minimizing b(π · ρ) (Linea 3)
 			encontrar_reversion_que_minimize_bp( array, n, mejor_rango_izquierda, mejor_rango_derecha );			
 		}else{

@@ -1,8 +1,9 @@
 # Sorting by Reversals for Reversal Distance Problem on Bioinformatics
 Implement the algorithms SimpleReversalSort and ImprovedBreakpointReversalSort.<br/>
-<center>
-![](img/banner.png)<br/>
-</center>
+<p align="center">
+  <img src="img/banner.png" />
+</p>
+
 
 ## Data
 /hard.data

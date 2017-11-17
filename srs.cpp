@@ -10,12 +10,14 @@ cl srs.cpp
 #include <chrono> // diferencia de tiempo 
 
 using namespace std;
-void imprimir_array(int * array, int n){
+void imprimir_array(int * array, int n){	
 	for (int i = 0; i != n; i++){
-		// cout << "array["<<i<<"] = " << array[i] << endl;
-		cout << array[i] << "\t";
+		cout << array[i];
+		if(i != n - 1){ // No poner coma al final
+			cout << ", ";	
+		}		
 	}
-	cout << endl;
+	cout << " => ";
 }
 
 void leer_permutacion(int *&array, int& n){
@@ -101,7 +103,7 @@ Ref.
 */
 void simple_reversal_sort(int *&array, int n, int& d_pi){
 	d_pi = 0; // Init 
-	cout << "simple_reversal_sort: " << endl;
+	// cout << "simple_reversal_sort: " << endl;
 	
 	int i = 1; // Valor esperado (VE); comienza en 1, tomado de la permutación identidad
 
@@ -116,7 +118,10 @@ void simple_reversal_sort(int *&array, int n, int& d_pi){
 
 			// cout << "p (inversion - elementos) = (" << array[k] << ", "<<  array[posicion_valor_esperado] << ")"<< endl  ;
 			revertir_sub_array(array, k, posicion_valor_esperado );
+
 			imprimir_array(array, n);
+        	cout << " | reversion entre (izq = " << array[k] << ", der = " << array[posicion_valor_esperado] << " )" << endl;
+			
 			d_pi++;
 		}
 		
@@ -138,7 +143,7 @@ int main(int argc, const char* argv[]) {
 	int d_pi = 0; // Número de reversiones
 
 	leer_permutacion(array, n);		
-	cout << "Valores Iniciales " << endl; imprimir_array(array, n);
+	cout << "Valores Iniciales " << endl; imprimir_array(array, n); cout << endl;
 	
 	// Calcular tiempo transcurrido.
   	auto t1 = chrono::high_resolution_clock::now();

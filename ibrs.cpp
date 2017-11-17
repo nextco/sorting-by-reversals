@@ -9,12 +9,14 @@ ibrs.exe < ibrs-clase.data
 #include <chrono> // diferencia de tiempo 
 
 using namespace std;
-void imprimir_array(int * array, int n){
+void imprimir_array(int * array, int n){	
 	for (int i = 0; i != n; i++){
-		// cout << "array["<<i<<"] = " << array[i] << endl;
-		cout << array[i] << ", ";
+		cout << array[i];
+		if(i != n - 1){ // No poner coma al final
+			cout << ", ";	
+		}		
 	}
-	cout << endl;
+	cout << " => ";
 }
 
 void leer_permutacion(int *&array, int& n){
@@ -71,23 +73,32 @@ int numero_de_breakpoints(int *&array, int n){
 
 /*
 Retorna verdadero si la permutación tiene un strip decreciente
-los strips de longitud uno son decrecientes por definicion
-
-Debug: ibrs.exe < sd.data
-
 */
-bool tiene_un_strip_decreciente(int *&array, int n){
-	// El primer valor y el ultimo valor la permutación son crecientes por definicion	
+bool tiene_un_strip_decreciente_fixed(int *&array, int n){
+	
+	// cout <<"tiene_un_strip_decreciente_fixed -> " << endl;
+
+	// El primer valor y el ultimo valor la permutación son crecientes por definicion
 	for (int i = 1; i != (n - 1) ; i++){
-		// Algoritmo: el elemento i pertenece a un strip decreciente,
-		// Si el elemento no pertece a un strip creciente
-		if( (array[i - 1] + 1) != array[i] && (array[i] + 1) != array[i + 1] ){
-			// cout << "posible strip decreciente en: " << array[ i - 1 ] << " " <<  array[i] << " " << array[i + 1] << endl;
-			return true;			
+		// 		
+		// Son valores consecutivos crecientes
+		if( array[i] - array[i - 1] == 1 ){
+			// 1 2 3 4 5 ... n
+			// cout << "Strip creciente (+): " << array[ i - 1 ] << " " <<  array[i] << endl;
+		}else if(array[i] - array[i - 1] == -1 ){ // Si no son crecientes podrian ser decrecientes
+			// n n-1 ... 1
+			// cout << "Strip decreciente (-): " << array[ i - 1 ] << " " <<  array[i] << endl;
+			// tiene_decreciente = true;
+			return true;
 		}
+
+		// Son valores intercalados como 1 3 5 2 4 => no hay strips consecutivos decrecientes
+		// Por definicion 3, 5, 2, 4 son strips decrecientes
 	}
+
 	return false;
 }
+
 
 /*
 	Input: [1,2,3,4,5]
@@ -106,7 +117,6 @@ void revertir_sub_array(int *& array, int izquierda, int derecha){
 		array[derecha - i] = t;		
 		// swap(array[izquierda + i], array[derecha - i]); // :S 
 	}
-
 }
 
 /*
@@ -122,7 +132,7 @@ void copiar_array(int *& a, int *& b, int n){
 /*
 Mejor segmento para revertir probando todas las combinaciones posibles
 */
-void elegir_segmento_reversion(int * array, int n, int& mejor_rango_izquierda, int& mejor_rango_derecha ){
+void encontrar_reversion_que_minimize_bp(int * array, int n, int& mejor_rango_izquierda, int& mejor_rango_derecha ){
 	// cout << "elegir_inversion_fuerza_bruta: " << endl;
 
 	mejor_rango_izquierda = 0; mejor_rango_derecha = 0;
@@ -154,6 +164,8 @@ void elegir_segmento_reversion(int * array, int n, int& mejor_rango_izquierda, i
 
 					// Determinar el mejor caso, dos bp eliminados
 					if(maximo_bp_a_eliminar == 2){
+						// Hacer reversion y salir de la funcion
+						revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
 						return;
 					}
 				}
@@ -161,24 +173,69 @@ void elegir_segmento_reversion(int * array, int n, int& mejor_rango_izquierda, i
 			}
 		}			
 	}
+
+	revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
 };
 /*
-Elegir el segmento creciente que esta más a la izquierda del array 
-excluyendo el primer y ultimo elemento
+Elegir el segmento creciente que optimize el numero de bp (disminuya)
+tratamos de seleccionar 2 y si no se puede revertimos un solo segmento
 */
-void elegir_segmento_creciente(int * array, int n, int& mejor_rango_izquierda, int& mejor_rango_derecha ){
-	// cout << "elegir_segmento_creciente: " << endl;
+void revertir_strip_creciente(int * array, int n, int& mejor_rango_izquierda, int& mejor_rango_derecha ){
+	// cout << "revertir_strip_creciente: " << endl;
 	
-	mejor_rango_izquierda = 1; 
+	int maximo_bp_a_eliminar = 0;
+	int bp_originales = numero_de_breakpoints(array, n);
 
-    while ( mejor_rango_izquierda < n - 1 && array[mejor_rango_izquierda] + 1 != array[mejor_rango_izquierda+1] ){
-    	mejor_rango_izquierda++;
-    }
-    
-    mejor_rango_derecha = mejor_rango_izquierda + 1;
-    while( mejor_rango_derecha < n - 2 && array[mejor_rango_derecha] + 1 == array[mejor_rango_derecha + 1]){
-    	mejor_rango_derecha++;
-    }        
+	mejor_rango_izquierda = 1;
+	// Hasta encontrar una secuencia de un strip creciente
+	// [1 - 2] -> Ok, comienza en dos
+	for (int i = 1; i != n-1; i++){
+		if( array[i + 1] - array[i] == 1 ){
+			// 1 2 3 4 .. n
+			mejor_rango_izquierda = i;
+
+			// Encontrar limite superior de strip
+			mejor_rango_derecha = mejor_rango_izquierda + 1;
+			for (int j = mejor_rango_derecha; j != n-1; j++){
+				if( array[mejor_rango_derecha + 1] - array[mejor_rango_derecha] == 1 ){
+					mejor_rango_derecha++;
+				}else{					
+					i = j;
+					break; // Salir de for y probamos la reversion en este segmento
+				}
+			}
+
+			// Probar reversion en ese rango y escoger la mejor
+			// cout << endl << "Encontro rango izquierda y derecha x-avo intento: Entre (a, b) " << endl;
+			// cout << endl << "(mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha];
+
+			// Contar cuantos breakpoints son eliminados por la reversion p(i,j)				
+			// Copiar array para probar combinaciones, esto es porque en c++ todos los arrays se 
+			// pasan por referencia y no queremos que se modifique nuestro array original
+				
+			int* probar_reversion_array = nullptr;
+			copiar_array(array, probar_reversion_array, n);
+			
+			revertir_sub_array(probar_reversion_array, mejor_rango_izquierda, mejor_rango_derecha);
+			
+			int bp_eliminados = bp_originales - numero_de_breakpoints(probar_reversion_array, n);
+			if( bp_eliminados > maximo_bp_a_eliminar ){
+				maximo_bp_a_eliminar = bp_eliminados;
+
+				// Determinar el mejor caso, dos bp eliminados
+				if(maximo_bp_a_eliminar == 2){
+					// Hacer reversion y salir de la funcion
+					revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
+					return;
+				}
+			}
+			// cout << ", bp_eliminados: " << bp_eliminados <<  endl;
+			// bp_eliminados: -1 (Significa que la reversion creciente no elimina ningun breakpoint y probamos el siguiente siempre tratamos de eliminar dos bp si se puede)
+		}
+	}
+
+	revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
+
 };
 
 /*
@@ -192,33 +249,36 @@ void improved_breakpoint_reversal_sort(int *&array, int n, int& d_pi){
 	d_pi = 0; // Init 
 	// cout << "improved_breakpoint_reversal_sort: " << endl;
 
-	cout << "bp_originales = " << numero_de_breakpoints(array, n) << endl << endl;	 
+	cout << "bp_originales = " << numero_de_breakpoints(array, n) << endl << endl;
+	// tiene_un_strip_decreciente_fixed(array, n);
+	
 	while( numero_de_breakpoints(array, n) > 0){
 
 		int mejor_rango_izquierda = 0;
 		int mejor_rango_derecha = 0;
 
 		// Tiene un strip decreciente?
-		if( tiene_un_strip_decreciente(array, n) ){
-			elegir_segmento_reversion(array, n, mejor_rango_izquierda, mejor_rango_derecha );
-			
-			// Mostrar rango(valor entre elementos) para hacer la reversion
-			cout << endl << "(mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha];
-			revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
-
+		// cout << "Strip decreciente (-): (0=false, 1=true) " << tiene_un_strip_decreciente_fixed(array, n) << endl;
+				
+		// if π has a decreasing strip (Linea 2)
+		if( tiene_un_strip_decreciente_fixed(array, n) ){
+			// Among all reversals, choose reversal ρ minimizing b(π · ρ) (Linea 3)
+			encontrar_reversion_que_minimize_bp( array, n, mejor_rango_izquierda, mejor_rango_derecha );			
 		}else{
+			// Choose a reversal ρ that flips an increasing strip in π (Linea 5)
 			// Solo quedan strips crecientes
-			elegir_segmento_creciente(array, n, mejor_rango_izquierda, mejor_rango_derecha);
-
-			cout << endl << "(mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha];
-			revertir_sub_array(array, mejor_rango_izquierda, mejor_rango_derecha);
+			revertir_strip_creciente( array, n, mejor_rango_izquierda, mejor_rango_derecha);
+			// exit(-1); // Debug Inteligente		
         }
-        d_pi++;
-        cout << "), bp_restantes = " << numero_de_breakpoints(array, n) << endl;
-        imprimir_array(array, n);
-        
-	}
 
+        d_pi++;
+                
+        imprimir_array(array, n);
+        cout << " | bp_restantes = " << numero_de_breakpoints(array, n) ;
+        cout << " (mri = " << array[mejor_rango_izquierda] << ", mrd = " << array[mejor_rango_derecha] << " )" << endl;
+        
+                
+	}
 
 }
 

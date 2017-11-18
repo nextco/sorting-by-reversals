@@ -1,9 +1,10 @@
 /*
+ibrs optimizado - reduccion de número de comparaciones entre strips
 cl ibrs-optimizado.cpp
-ibrs-optimizado.cpp < hard.data
+ibrs-optimizado.exe < input/fix.data
 */
 #include <iostream> // cout 
-#include <algorithm> // std::swap
+// #include <algorithm> // std::swap
 #include <random> //
 #include <string> // stoi
 #include <chrono> // diferencia de tiempo 

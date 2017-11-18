@@ -1,10 +1,10 @@
 /*
 ibrs fuerza bruta entre todos los elementos
-cl ibrs.cpp
-ibrs.exe < ibrs-clase.data
+cl ibrs-bf.cpp
+ibrs-bf.exe < input/fix.data - Bug Detected
 */
 #include <iostream> // cout 
-#include <algorithm> // std::swap
+// #include <algorithm> // std::swap
 #include <random> //
 #include <string> // stoi
 #include <chrono> // diferencia de tiempo 

@@ -1,4 +1,5 @@
 /*
+ibrs fuerza bruta entre todos los elementos
 cl ibrs.cpp
 ibrs.exe < ibrs-clase.data
 */

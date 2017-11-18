@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Creditos: https://www.cs.helsinki.fi/u/tpkarkka/opetus/14s/AfB/exercise2_problem3.py
-# Improved breakpoint reversal sort
+# Improved breakpoint reversal sort - Bruteforce all vs all posibles combinations
 # Example:  ./prob3.py 8 2 7 6 5 1 4 3
 import sys
 
